@@ -1,6 +1,5 @@
 package artur.model;
 
-import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,11 +17,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@ToString
-@EqualsAndHashCode
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -52,6 +47,44 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.roles = roles;
+    }
+
+    public User(Long id, String firstName, String lastName, String username, String password, Set<Role> roles) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        return roles != null ? roles.equals(user.roles) : user.roles == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (username != null ? username.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (roles != null ? roles.hashCode() : 0);
+        return result;
     }
 
     public void setId(Long id) {
@@ -135,8 +168,16 @@ public class User implements UserDetails {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
-
-
-
-
