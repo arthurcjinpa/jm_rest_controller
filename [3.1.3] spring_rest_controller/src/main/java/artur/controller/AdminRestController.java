@@ -1,24 +1,15 @@
-package artur.controller;//package artur.controller;
-//
-//import artur.model.User;
-//import artur.service.UserService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.MediaType;
+package artur.controller;
+
 
 import artur.model.Role;
 import artur.model.User;
 import artur.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -40,7 +31,7 @@ public class AdminRestController {
     ResponseEntity<User> getUserByUsername(Principal principal) {
         try {
             User user = userService.findByUsername(principal.getName());
-            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -50,7 +41,7 @@ public class AdminRestController {
     ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
             userService.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -65,7 +56,7 @@ public class AdminRestController {
     ResponseEntity<User> getUserById(@PathVariable(value = "id") Long id) {
         try {
             User user = userService.findById(id);
-            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -75,7 +66,7 @@ public class AdminRestController {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         try {
            userService.addUser(user);
-            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -85,10 +76,9 @@ public class AdminRestController {
     public ResponseEntity<User> updateUser(@RequestBody User user) {
         try {
             userService.updateUser(user);
-            return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }
-
